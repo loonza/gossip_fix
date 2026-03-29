@@ -230,3 +230,10 @@ if __name__ == '__main__':
     init_db(database)
 
     app.run(host='0.0.0.0', port=10007, debug=False)
+
+@app.after_request
+def set_security_headers(response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'"
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    return response
